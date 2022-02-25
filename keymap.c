@@ -11,16 +11,17 @@ enum custom_keycodes {
 };
 
 enum layers {
-	QUERTY,
+	QWERTY,
 	SYM,
 	NAV,
 };
 
 enum tap_dance_codes {
-	DANCE_0,
-	DANCE_1,
-	DANCE_2,
-	DANCE_3,
+	DANCE_Z,
+	DANCE_X,
+	DANCE_C,
+	DANCE_V,
+
 	DANCE_4,
 	DANCE_5,
 	DANCE_6,
@@ -37,20 +38,20 @@ enum tap_dance_codes {
 #define _____ KC_TRANSPARENT
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-	[QUERTY] = LAYOUT_moonlander(
+	[QWERTY] = LAYOUT_moonlander(
 		KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6,                              KC_7, KC_8, KC_9, KC_0, KC_MINUS, KC_EQUAL, KC_BSPACE,
 		KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_UP,                             KC_DOWN, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSLASH,
 		KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_LEFT,                           KC_RGHT, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
-		OSML(SFT), DNC(0), DNC(1), DNC(2), DNC(3), KC_B,                           KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, OSMR(SFT),
-		OSML(CTL), LSFTCTL, OSL(1), KC_LALT, KC_SPC,       KC_MEH,       KC_HYPR,         KC_SPC, MT(MOD_RALT, KC_LBRC), DNC(9), RSFTCTL, MT(MOD_RCTL, KC_RBRC),
-		                                  KC_ENT, DNC(4), KC_LGUI,       OSL(1), KC_DEL, KC_ENT
+		KC_LSFT, DNC(Z), DNC(X), DNC(C), DNC(V), KC_B,                           KC_N, KC_M, KC_COMMA, KC_DOT, KC_SLASH, KC_RSFT,
+		KC_LCTL, LSFTCTL, OSL(1), KC_LALT, KC_SPC,       KC_MEH,       KC_HYPR,         KC_SPC, MT(MOD_RALT, KC_LBRC), DNC(9), RSFTCTL, MT(MOD_RCTL, KC_RBRC),
+		                                  KC_ENT, DNC(4), KC_LGUI,       OSL(2), KC_DEL, KC_ENT
 	),
 	[SYM] = LAYOUT_moonlander(
 		AU_TOG, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6,                       KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_PSCR,
 		MU_TOG, KC_HOME, KC_UP, KC_END, KC_PGUP, _____, _____,                  _____, _____, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC, _____,
 		MU_MOD, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, _____, _____,               _____, _____, _____, _____, _____, _____, _____,
-		_____, KC_VOLU, KC_VOLD, KC_MUTE, _____, _____,                                _____, _____, _____, _____, _____, _____,
-		_____, KC_MPLY, KC_MPRV, KC_MNXT, _____,           _____,       _____,                _____, _____, _____, _____, _____,
+		_____, KC_VOLU, KC_VOLD, KC_MUTE, _____, _____,                                _____, _____, _____, KC_HOME, KC_UP, KC_END,
+		_____, KC_MPLY, KC_MPRV, KC_MNXT, _____,           _____,       _____,                _____, _____, KC_LEFT, KC_DOWN, KC_RGHT,
 		                                    _____, _____, OSL(2),       _____, _____, _____
 	),
 	[NAV] = LAYOUT_moonlander(KC_AUDIO_MUTE, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_PSCREEN, KC_AUDIO_VOL_UP, KC_AUDIO_VOL_DOWN, KC_MEDIA_PLAY_PAUSE, _____, _____, _____, _____, _____, _____, KC_KP_7, KC_KP_8, KC_KP_9, KC_KP_MINUS, _____, _____, _____, _____, _____, _____, _____, _____, _____, _____, KC_KP_4, KC_KP_5, KC_KP_6, KC_KP_PLUS, _____, _____, MU_TOG, _____, _____, _____, _____, _____, KC_KP_1, KC_KP_2, KC_KP_3, KC_KP_ASTERISK, _____, TO(0), _____, WEBUSB_PAIR, _____, _____, RGB_MOD, RGB_TOG, KC_0, KC_KP_DOT, _____, KC_KP_SLASH, _____, RGB_VAD, RGB_VAI, TOGGLE_LAYER_COLOR, RGB_SPI, RGB_HUD, RGB_HUI),
@@ -62,41 +63,42 @@ void keyboard_post_init_user(void) {
 	rgb_matrix_enable();
 }
 
-/* RGB LED map appears to number keys thusly
-0 5 10 15 20 25 29         65 61 56 51 46 41 36
-1 6 11 16 21 26 30         66 62 57 52 47 42 37
-2 7 12 17 22 27 31         67 63 58 53 48 43 38
-3 8 13 18 23 28               64 59 54 49 44 39
-4 9 14 19 24    35         71    60 55 50 45 40
-             32 33 34   70 69 68
- */
-#define SWTCCOLOR {4,255,255}
 const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
-	[0] = KEYS_TO_LEDS(
-		BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, SWTCCOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR,                   BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR,    BASECOLOR, BASECOLOR,    BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, BASECOLOR, SWTCCOLOR, BASECOLOR
+	[QWERTY] = KEYS_TO_LEDS(
+		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,                    TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
+		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,                    TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
+		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,                    TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
+		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,                                TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
+		TEAL, TEAL, ORNG, TEAL, TEAL,                TEAL, TEAL,                 TEAL, TEAL, TEAL, TEAL, TEAL,
+		                                 TEAL, TEAL, TEAL, ORNG, TEAL, TEAL
 	),
-
-	[1] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {8,204,255}, {8,204,255}, {0,0,0}, {141,255,255}, {0,0,0}, {0,0,0}, {8,204,255}, {141,255,255}, {141,255,255}, {0,0,0}, {0,0,0}, {8,204,255}, {0,0,0}, {141,255,255}, {0,0,0}, {0,0,0}, {8,204,255}, {8,204,255}, {8,204,255}, {0,0,0}, {0,0,0}, {8,204,255}, {8,204,255}, {8,204,255}, {0,0,0}, {8,204,255}, {8,204,255}, {8,204,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {8,204,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {8,204,255}, {8,204,255}, {0,0,0}, {0,0,0}, {0,0,0}, {8,204,255}, {8,204,255}, {0,0,0}, {0,0,0}, {0,0,0}, {8,204,255}, {8,204,255}, {0,0,0}, {0,0,0}, {0,0,0}, {8,204,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {8,204,255}, {0,0,0}, {0,0,0}, {0,0,0}, {8,204,255}, {8,204,255}, {8,204,255}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
-
-	[2] = { {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {124,255,199}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {31,255,255}, {31,255,255}, {31,255,255}, {31,255,255}, {33,255,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,204,255}, {146,224,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,204,255}, {146,224,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {31,255,255}, {31,255,255}, {31,255,255}, {31,255,255} },
+	[SYM] = KEYS_TO_LEDS(
+		ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG,                    ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG,
+		ORNG, GOLD, TEAL, GOLD, GOLD, BLCK, BLCK,                    BLCK, BLCK, GOLD, GOLD, GOLD, GOLD, ORNG,
+		ORNG, TEAL, TEAL, TEAL, GOLD, BLCK, BLCK,                    BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,
+		BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,                                BLCK, BLCK, BLCK, GOLD, TEAL, GOLD,
+		BLCK, BLCK, ORNG, BLCK, BLCK,                BLCK, BLCK,                 BLCK, BLCK, TEAL, TEAL, TEAL,
+		                                 BLCK, BLCK, BLCK, ORNG, BLCK, BLCK
+	),
+	[NAV] = { {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {124,255,199}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {31,255,255}, {31,255,255}, {31,255,255}, {31,255,255}, {33,255,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,204,255}, {146,224,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,204,255}, {146,224,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {31,255,255}, {31,255,255}, {31,255,255}, {31,255,255} },
 
 };
 
 
 void set_layer_color(int layer) {
 	for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
-	HSV hsv = {
-		.h = pgm_read_byte(&ledmap[layer][i][0]),
-		.s = pgm_read_byte(&ledmap[layer][i][1]),
-		.v = pgm_read_byte(&ledmap[layer][i][2]),
-	};
-	if (!hsv.h && !hsv.s && !hsv.v) {
-		rgb_matrix_set_color( i, 0, 0, 0 );
-	} else {
-		RGB rgb = hsv_to_rgb( hsv );
-		float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
-		rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
-	}
+		HSV hsv = {
+			.h = pgm_read_byte(&ledmap[layer][i][0]),
+			.s = pgm_read_byte(&ledmap[layer][i][1]),
+			.v = pgm_read_byte(&ledmap[layer][i][2]),
+		};
+		if (!hsv.h && !hsv.s && !hsv.v) {
+			rgb_matrix_set_color( i, 0, 0, 0 );
+		} else {
+			RGB rgb = hsv_to_rgb( hsv );
+			float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
+			rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
+		}
 	}
 }
 
@@ -122,7 +124,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
 	case RGB_SLD:
 		if (record->event.pressed) {
-		rgblight_mode(1);
+			rgblight_mode(1);
 		}
 		return false;
 	}
@@ -597,6 +599,14 @@ void dance_9_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-	[DANCE_0] = TAP_HOLD_DANCE(0, KC_Z, LCTL(KC_Z)),
-	[DANCE_1] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_1, dance_1_finished, dance_1_reset), [DANCE_2] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_2, dance_2_finished, dance_2_reset), [DANCE_3] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_3, dance_3_finished, dance_3_reset), [DANCE_4] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_4, dance_4_finished, dance_4_reset), [DANCE_5] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_5, dance_5_finished, dance_5_reset), [DANCE_6] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_6, dance_6_finished, dance_6_reset), [DANCE_7] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_7, dance_7_finished, dance_7_reset), [DANCE_8] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_8, dance_8_finished, dance_8_reset), [DANCE_9] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_9_finished, dance_9_reset),
+	[DANCE_Z] = TAP_HOLD_DANCE(0, KC_Z, LCTL(KC_Z)),
+	[DANCE_X] = TAP_HOLD_DANCE(1, KC_X, LCTL(KC_X)),
+	[DANCE_C] = TAP_HOLD_DANCE(2, KC_C, LCTL(KC_C)),
+	[DANCE_V] = TAP_HOLD_DANCE(3, KC_V, LCTL(KC_V)),
+	[DANCE_4] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_4, dance_4_finished, dance_4_reset),
+	[DANCE_5] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_5, dance_5_finished, dance_5_reset),
+	[DANCE_6] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_6, dance_6_finished, dance_6_reset),
+	[DANCE_7] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_7, dance_7_finished, dance_7_reset),
+	[DANCE_8] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_8, dance_8_finished, dance_8_reset),
+	[DANCE_9] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_9_finished, dance_9_reset),
 };
