@@ -1,10 +1,6 @@
 #include "dance.h"
 
-#define GET_IDX uint16_t idx = ((keycode_data_t*)user_data)->idx;
-#define GET_TAP_KEY uint16_t tapKC = ((keycode_data_t*)user_data)->tap;
-#define GET_HOLD_KEY uint16_t holdKC = ((keycode_data_t*)user_data)->hold;
-
-static tap dance_tap_hold_state[10];
+#define GET_UD keycode_data_t* ud = ((keycode_data_t*)user_data);
 
 uint8_t dance_step(qk_tap_dance_state_t *state) {
 	if (state->count == 1) {
@@ -18,62 +14,70 @@ uint8_t dance_step(qk_tap_dance_state_t *state) {
 	return MORE_TAPS;
 }
 
-void dance_tap_hold(qk_tap_dance_state_t *state, void *user_data) {
-	GET_TAP_KEY
+void dance_each(qk_tap_dance_state_t *state, void *user_data) {
+	GET_UD
 
 	if (state->count == 3) {
-		tap_code16(tapKC);
-		tap_code16(tapKC);
-		tap_code16(tapKC);
+		tap_code16(ud->tap);
+		tap_code16(ud->tap);
+		tap_code16(ud->tap);
 	}
 	if (state->count > 3) {
-		tap_code16(tapKC);
+		tap_code16(ud->tap);
 	}
 }
 
-void dance_tap_hold_finished(qk_tap_dance_state_t *state, void *user_data) {
-	GET_IDX
-	GET_TAP_KEY
-	GET_HOLD_KEY
+void dance_tap_hold_dtap_finished(qk_tap_dance_state_t *state, void *user_data) {
+	GET_UD
 
-	dance_tap_hold_state[idx].step = dance_step(state);
+	ud->step = dance_step(state);
 
-	switch (dance_tap_hold_state[idx].step) {
+	switch (ud->step) {
 		case SINGLE_TAP:
-			register_code16(tapKC);
+			register_code16(ud->tap);
 			break;
 		case SINGLE_HOLD:
-			register_code16(holdKC);
+			if (ud->hold) {
+				register_code(ud->hold);
+			}
 			break;
 		case DOUBLE_TAP:
-			register_code16(tapKC);
-			register_code16(tapKC);
+			if (ud->dtap) {
+				register_code(ud->dtap);
+			} else {
+				register_code16(ud->tap);
+				register_code16(ud->tap);
+			}
 			break;
 		case DOUBLE_SINGLE_TAP:
-			tap_code16(tapKC);
-			register_code16(tapKC);
+			tap_code16(ud->tap);
+			register_code16(ud->tap);
 	}
 }
 
-void dance_tap_hold_reset(qk_tap_dance_state_t *state, void *user_data) {
-	GET_IDX;
-	GET_TAP_KEY
-	GET_HOLD_KEY
+void dance_tap_hold_dtap_reset(qk_tap_dance_state_t *state, void *user_data) {
+	GET_UD
 
 	wait_ms(10);
-	switch (dance_tap_hold_state[idx].step) {
+	switch (ud->step) {
 		case SINGLE_TAP:
-			unregister_code16(tapKC);
+			unregister_code16(ud->tap);
 			break;
 		case SINGLE_HOLD:
-			unregister_code16(holdKC);
+			if (ud->hold) {
+				unregister_code(ud->hold);
+			}
 			break;
 		case DOUBLE_TAP:
-			unregister_code16(tapKC);
+			if (ud->dtap) {
+				unregister_code(ud->dtap);
+			} else {
+				unregister_code16(ud->tap);
+			}
 			break;
 		case DOUBLE_SINGLE_TAP:
-			unregister_code16(tapKC);
+			unregister_code16(ud->tap);
 			break;
 	}
-	dance_tap_hold_state[idx].step = 0;
+	ud->step = 0;
 }

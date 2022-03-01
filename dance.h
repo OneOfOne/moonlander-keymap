@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef TAP_DANCE_ENABLE
+#define TAP_DANCE_ENABLE
+#endif
+
 #include "moonlander.h"
 
 typedef struct {
@@ -17,21 +21,25 @@ enum {
 };
 
 typedef struct {
-	uint16_t idx;
 	uint16_t tap;
 	uint16_t hold;
+	uint16_t dtap;
+	uint8_t step;
 } keycode_data_t;
 
-#define ACTION_TAP_DANCE_ADV_KEY(user_fn_on_each_tap, user_fn_on_dance_finished, user_fn_on_dance_reset, key) \
-	{ .fn = {user_fn_on_each_tap, user_fn_on_dance_finished, user_fn_on_dance_reset}, .user_data = (void*)&((keycode_data_t){0, key, 0}), }
+#define ACTION_TAP_DANCE_ADV_CUSTOM(user_fn_on_each_tap, user_fn_on_dance_finished, user_fn_on_dance_reset, tap, hold, dtap) \
+	{ .fn = {user_fn_on_each_tap, user_fn_on_dance_finished, user_fn_on_dance_reset}, .user_data = (void*)&((keycode_data_t){tap, hold, dtap, 0}), }
 
-#define ACTION_TAP_DANCE_ADV_TAPHOLD(user_fn_on_each_tap, user_fn_on_dance_finished, user_fn_on_dance_reset, idx, tap, hold) \
-	{ .fn = {user_fn_on_each_tap, user_fn_on_dance_finished, user_fn_on_dance_reset}, .user_data = (void*)&((keycode_data_t){idx, tap, hold}), }
+#define TAP_HOLD_DANCE(tap, hold) \
+	ACTION_TAP_DANCE_ADV_CUSTOM(dance_each, dance_tap_hold_dtap_finished, dance_tap_hold_dtap_reset, tap, hold, 0)
 
-#define TAP_HOLD_DANCE(idx, tap, hold) \
-	ACTION_TAP_DANCE_ADV_TAPHOLD(dance_tap_hold, dance_tap_hold_finished, dance_tap_hold_reset, idx, tap, hold)
+#define TAP_HOLD_DTAP_DANCE(tap, hold, dtap) \
+	ACTION_TAP_DANCE_ADV_CUSTOM(dance_each, dance_tap_hold_dtap_finished, dance_tap_hold_dtap_reset, tap, hold, dtap)
+
+#define TAP_DTAP_DANCE(tap, dtap) \
+	ACTION_TAP_DANCE_ADV_CUSTOM(dance_each, dance_tap_hold_dtap_finished, dance_tap_hold_dtap_reset, tap, 0, dtap)
 
 uint8_t dance_step(qk_tap_dance_state_t *state);
-void dance_tap_hold(qk_tap_dance_state_t *state, void *user_data);
-void dance_tap_hold_finished(qk_tap_dance_state_t *state, void *user_data);
-void dance_tap_hold_reset(qk_tap_dance_state_t *state, void *user_data);
+void dance_each(qk_tap_dance_state_t *state, void *user_data);
+void dance_tap_hold_dtap_finished(qk_tap_dance_state_t *state, void *user_data);
+void dance_tap_hold_dtap_reset(qk_tap_dance_state_t *state, void *user_data);
