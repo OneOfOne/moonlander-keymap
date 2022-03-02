@@ -2,6 +2,8 @@
 
 #include "color.h"
 
+#define RED { HSV_RED }
+#define WHIT { HSV_WHITE }
 #define GREN { HSV_GREEN }
 #define TEAL { HSV_TEAL }
 #define GOLD { HSV_GOLD }
