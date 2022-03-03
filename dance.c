@@ -58,7 +58,7 @@ void dance_tap_hold_dtap_finished(qk_tap_dance_state_t *state, void *user_data) 
 void dance_tap_hold_dtap_reset(qk_tap_dance_state_t *state, void *user_data) {
 	GET_UD
 
-	wait_ms(10);
+	wait_ms(1);
 	switch (ud->step) {
 		case SINGLE_TAP:
 			unregister_code16(ud->tap);
