@@ -9,7 +9,7 @@
 enum custom_keycodes {
 	RGB_SLD = ML_SAFE_RANGE,
 	ST_MACRO_BR, // [|]
-	ST_MACRO_CB, // {|}
+	ST_MACRO_EQ, // := |
 	ST_MACRO_PR, // (|)
 };
 
@@ -41,9 +41,9 @@ enum tap_dance_codes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[QWERTY] = LAYOUT_moonlander(
-		DN(GRV), KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_6   ,                     KC_7   , KC_8   , KC_9   , KC_0   , KC_MINS, KC_EQL , KC_BSPC,
-		KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , MC(PR) ,                     MC(CB) , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSLS,
-		KC_ESC , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_LEAD,                     MC(BR) , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT,
+		DN(GRV), KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_MINS,                     KC_EQL , KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_BSPC,
+		KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , MC(EQ) ,                     MC(BR) , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSLS,
+		KC_ESC , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_LEAD,                     MC(PR) , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT,
 		KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,                                       KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,
 		KC_LCTL, LSFTCTL, TT(SYM), KC_LALT, ALTSPC ,                   KC_MEH ,   KC_HYPR,                   ALTSPC , ALTLBRC, TT(SYM), RSFTCTL, CTLRBRC,
 		                                              GUIENT, DN(BS) , KC_LGUI,   OSGUI  , DN(DEL), GUIENT
@@ -103,7 +103,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 
 LEADER_EXTERNS();
-bool enable_repeat = false;
+bool repeat_enabled = true;
 void matrix_scan_user(void) {
 	LEADER_DICTIONARY() {
 		leading = false;
@@ -112,7 +112,7 @@ void matrix_scan_user(void) {
 			SEND_STRING(SS_LCTL(SS_LSFT("t")));
 
 		} else SEQ_ONE_KEY(KC_1) {
-			enable_repeat = !enable_repeat;
+			repeat_enabled = !repeat_enabled;
 
 		} else SEQ_ONE_KEY(KC_R) {
 			SEND_STRING(SS_LALT(SS_TAP(X_F2)));
@@ -137,7 +137,7 @@ void matrix_scan_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
 		case KC_A ... KC_0:
-			if (!IS_LAYER_ON(QWERTY) || enable_repeat) return true;
+			if (!IS_LAYER_ON(QWERTY) || repeat_enabled) return true;
 			if (process_leader(keycode, record) && record->event.pressed) {
 				if (record->event.pressed) {
 					tap_code16(keycode);
@@ -148,17 +148,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 			break;
 		case ST_MACRO_BR:
 			if (record->event.pressed) {
-				SEND_STRING("[]" SS_TAP(X_LEFT));
+				if (leading) {
+					SEND_STRING("&& ");
+				} else {
+					SEND_STRING("[]" SS_UP(X_LSFT) SS_TAP(X_LEFT));
+				}
 			}
 			break;
-		case ST_MACRO_CB:
+		case ST_MACRO_EQ:
 			if (record->event.pressed) {
-				SEND_STRING("{}" SS_TAP(X_LEFT));
+				if (leading) {
+					SEND_STRING("<- ");
+				} else {
+					SEND_STRING(":= ");
+				}
 			}
 			break;
 		case ST_MACRO_PR:
 			if (record->event.pressed) {
-				SEND_STRING("()" SS_TAP(X_LEFT));
+				if (leading) {
+					SEND_STRING("|| ");
+				} else {
+					SEND_STRING("()" SS_UP(X_LSFT) SS_TAP(X_LEFT));
+				}
 			}
 			break;
 		default:
@@ -203,8 +215,8 @@ void rgb_matrix_indicators_user(void) {
 			rgb_matrix_set_color(31, RGB_GOLD);
 		}
 
-		if (enable_repeat) {
-			rgb_matrix_set_color(5, RGB_RED);
+		if (repeat_enabled) {
+			rgb_matrix_set_color(5, RGB_TURQUOISE);
 		} else {
 			rgb_matrix_set_color(5, RGB_TEAL);
 		}
