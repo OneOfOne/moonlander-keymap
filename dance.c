@@ -38,12 +38,12 @@ void dance_tap_hold_dtap_finished(qk_tap_dance_state_t *state, void *user_data) 
 			break;
 		case SINGLE_HOLD:
 			if (ud->hold) {
-				register_code(ud->hold);
+				register_code16(ud->hold);
 			}
 			break;
 		case DOUBLE_TAP:
 			if (ud->dtap) {
-				register_code(ud->dtap);
+				register_code16(ud->dtap);
 			} else {
 				register_code16(ud->tap);
 				register_code16(ud->tap);
@@ -65,12 +65,12 @@ void dance_tap_hold_dtap_reset(qk_tap_dance_state_t *state, void *user_data) {
 			break;
 		case SINGLE_HOLD:
 			if (ud->hold) {
-				unregister_code(ud->hold);
+				unregister_code16(ud->hold);
 			}
 			break;
 		case DOUBLE_TAP:
 			if (ud->dtap) {
-				unregister_code(ud->dtap);
+				unregister_code16(ud->dtap);
 			} else {
 				unregister_code16(ud->tap);
 			}

@@ -24,12 +24,18 @@
 #undef ONESHOT_TIMEOUT
 #define ONESHOT_TIMEOUT 1000
 
-#define QMK_KEYS_PER_SCAN 10
+#define QMK_KEYS_PER_SCAN 4
 
 #define FORCE_NKRO
 
 #undef DEBOUNCE
-#define DEBOUNCE 0
+#define DEBOUNCE 5
 
-#undef LOCKING_SUPPORT_ENABLE
-#undef LOCKING_RESYNC_ENABLE
+#undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 120 // limits maximum brightness of LEDs to 150 out of 255. Higher may cause the controller to crash.
+#define RGB_MATRIX_HUE_STEP 8
+#define RGB_MATRIX_SAT_STEP 8
+#define RGB_MATRIX_VAL_STEP 8
+#define RGB_MATRIX_SPD_STEP 10
+#define RGB_MATRIX_KEYPRESSES
+#define RGB_MATRIX_FRAMEBUFFER_EFFECTS

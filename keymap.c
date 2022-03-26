@@ -15,7 +15,7 @@ enum custom_keycodes {
 
 enum layers {
 	QWERTY,
-	MTGAP,
+	COLMK,
 	SYM,
 	NAV,
 };
@@ -39,60 +39,91 @@ enum tap_dance_codes {
 #define OSGUI OSM(MOD_LGUI)
 #define MC(x) ST_MACRO_##x
 
+#define KC_ORYX WEBUSB_PAIR
+
+#define MS_UP KC_MS_UP
+#define MS_DOWN KC_MS_DOWN
+#define MS_LEFT KC_MS_LEFT
+#define MS_RGHT KC_MS_RIGHT
+#define MS_BTN1 KC_MS_BTN1
+#define MS_BTN2 KC_MS_BTN2
+#define MS_BTN3 KC_MS_BTN3
+#define MS_BTN4 KC_MS_BTN4
+#define MS_BTN5 KC_MS_BTN5
+#define MS_BTN6 KC_MS_BTN6
+#define MS_W_U KC_MS_WH_UP
+#define MS_W_D KC_MS_WH_DOWN
+#define MS_W_L KC_MS_WH_LEFT
+#define MS_W_R KC_MS_WH_RIGHT
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[QWERTY] = LAYOUT_moonlander(
-		DN(GRV), KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_MINS,                     KC_EQL , KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , KC_BSPC,
-		KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , MC(EQ) ,                     MC(BR) , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSLS,
-		KC_ESC , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_LEAD,                     MC(PR) , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT,
-		KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,                                       KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,
-		KC_LCTL, LSFTCTL, TT(SYM), KC_LALT, ALTSPC ,                   KC_MEH ,   KC_HYPR,                   ALTSPC , ALTLBRC, TT(SYM), RSFTCTL, CTLRBRC,
-		                                              GUIENT, DN(BS) , KC_LGUI,   OSGUI  , DN(DEL), GUIENT
+		DN(GRV), KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_6   ,          KC_7   , KC_8   , KC_9   , KC_0   , KC_MINS, KC_EQL , KC_BSPC,
+		KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , MC(EQ) ,          MC(BR) , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSLS,
+		KC_ESC , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_LEAD,          MC(PR) , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT,
+		KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,                            KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,
+		KC_LCTL, LSFTCTL, MO(SYM), KC_LALT, KC_SPC ,          KC_MEH ,          KC_HYPR,          KC_SPC , ALTLBRC, TT(SYM), RSFTCTL, CTLRBRC,
+		                                    KC_ENT , DN(BS) , KC_LGUI,          KC_APP , DN(DEL), KC_ENT
 	),
-	// [MTGAP] = LAYOUT_moonlander(
-	// 	KC_GRV , KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_6   ,                     KC_7   , KC_8   , KC_9   , KC_0   , KC_MINS, KC_EQL , KC_BSPC,
-	// 	KC_TAB , KC_Y   , KC_P   , KC_O   , KC_U   , KC_J   , DF(QWERTY),                  KC_DOWN, KC_K   , KC_D   , KC_L   , KC_C   , KC_W   , KC_BSLS,
-	// 	KC_ESC , KC_I   , KC_N   , KC_E   , KC_A   , KC_COMM, KC_LEFT,                     KC_RGHT, KC_M   , KC_H   , KC_T   , KC_S   , KC_R   , KC_QUOT,
-	// 	KC_LSFT, KC_Q   , KC_Z   , KC_SLSH, KC_DOT , KC_SCLN,                                       KC_B   , KC_F   , KC_G   , KC_V   , KC_X   , KC_RSFT,
-	// 	KC_LCTL, LSFTCTL, TT(SYM), KC_LALT, KC_SPC ,                 KC_MEH ,       KC_HYPR,                 KC_SPC , ALTLBRC, TT(SYM), RSFTCTL, CTLRBRC,
-	// 	                                            KC_ENT, DNC(BS), KC_LGUI,       KC_MENU, KC_DEL, KC_ENT
-	// ),
+	[COLMK] = LAYOUT_moonlander(
+		______ , ______ , ______ , ______ , ______ , ______ , ______ ,          ______ , ______ , ______ , ______ , ______ , ______ , ______ ,
+		______ , KC_Q   , KC_W   , KC_F   , KC_P   , KC_B   , ______ ,          ______ , KC_J   , KC_L   , KC_U   , KC_Y   , KC_SCLN, ______ ,
+		______ , KC_A   , KC_R   , KC_S   , KC_T   , KC_G   , ______ ,          ______ , KC_M   , KC_N   , KC_E   , KC_I   , KC_O   , ______ ,
+		______ , KC_Z   , KC_X   , KC_C   , KC_D   , KC_V   ,                            KC_K   , KC_H   , ______ , ______ , ______ , ______ ,
+		______ , ______ , TO(0)  , ______ , ______ ,          ______ ,          ______ ,          ______ , ______ , TO(0)  , ______ , ______ ,
+		                                      ______, ______, ______ ,          ______ , ______ , ______
+	),
 	[SYM] = LAYOUT_moonlander(
-		KC_ESC , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  ,                     KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12 , KC_PSCR,
-		______ , KC_HOME, KC_UP  , KC_END , KC_PGUP, ______ , KC_F13 ,                     KC_F14 , ______ , ______ , ______ , ______ , KC_PGUP, ______ ,
-		______ , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, ______ , KC_F15 ,                     KC_F16 , KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_PGDN, ______ ,
-		______ , ______ , ______ , ______ , ______ , ______ ,                                       ______ , ______ , ______ , KC_HOME, KC_END , ______ ,
-		______ , ______ , ______ , ______ , ______ ,                   KC_MUTE,   KC_MPLY,                    ______ , ______ , ______ , ______ , ______ ,
-		                                             ______ , KC_VOLU, KC_VOLD,   KC_MPRV, KC_MNXT, ______
+		______ , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  ,          KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12 , KC_PSCR,
+		______ , KC_HOME, KC_UP  , KC_END , KC_PGUP, ______ , KC_F13 ,          KC_F14 , ______ , ______ , ______ , ______ , ______ , KC_BRK ,
+		______ , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, ______ , ______ ,          ______ , ______ , ______ , ______ , KC_LOCK, ______ , ______ ,
+		______ , ______ , ______ , ______ , ______ , ______ ,                            ______ , ______ , ______ , ______ , ______ , ______ ,
+		______ , ______ , TO(0)  , ______ , ______ ,          KC_MUTE,          KC_MPLY,          ______ , ______ , TO(0)  , ______ , ______ ,
+		                                    ______ , KC_VOLU, KC_VOLD,          KC_MPRV, KC_MNXT, ______
 	),
-	[NAV] = LAYOUT_moonlander(KC_AUDIO_MUTE, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_PSCREEN, KC_AUDIO_VOL_UP, KC_AUDIO_VOL_DOWN, KC_MEDIA_PLAY_PAUSE, ______, ______, ______, ______, ______, ______, KC_KP_7, KC_KP_8, KC_KP_9, KC_KP_MINUS, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, KC_KP_4, KC_KP_5, KC_KP_6, KC_KP_PLUS, ______, ______, MU_TOG, ______, ______, ______, ______, ______, KC_KP_1, KC_KP_2, KC_KP_3, KC_KP_ASTERISK, ______, TO(0), ______, ______, ______, ______, RGB_MOD, RGB_TOG, KC_0, KC_KP_DOT, ______, KC_KP_SLASH, ______, RGB_VAD, RGB_VAI, TOGGLE_LAYER_COLOR, RGB_SPI, RGB_HUD, RGB_HUI),
+	[NAV] = LAYOUT_moonlander(
+		AU_TOG , MS_BTN1, MS_BTN2, MS_BTN3, MS_BTN4, MS_BTN5, MS_BTN6,          ______ , ______ , ______ , ______ , ______ , ______ , KC_ORYX,
+		MU_TOG , MS_W_U , MS_UP  , MS_W_D , ______ , ______ , ______ ,          ______ , ______ , ______ , ______ , ______ , ______ , ______ ,
+		MU_MOD , MS_LEFT, MS_DOWN, MS_RGHT, ______ , ______ , ______ ,          ______ , RGB_HUD, RGB_HUI, RGB_SPD, RGB_SPI, ______ , ______ ,
+		______ , MS_W_L , ______ , MS_W_R , ______ , ______ ,                            RGB_VAD, RGB_VAI, RGB_SLD, RGB_MOD, ______ , ______ ,
+		______ , ______ , TO(0)  , ______ , ______ ,          ______ ,          ______ ,          ______ , ______ , TO(0)  , ______ , ______ ,
+		                                      ______, ______, ______ ,          ______ , ______ , ______
+	),
 };
 
-const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
+const HSV PROGMEM ledmap[][DRIVER_LED_TOTAL] = {
 	[QWERTY] = KEYS_TO_LEDS(
-		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,                    TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
+		TEAL, GREN, TEAL, TEAL, TEAL, TEAL, TEAL,                    TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
 		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, GREN,                    GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
 		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, GOLD,                    GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
 		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,                                TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
 		TEAL, TEAL, ORNG, TEAL, TEAL,                TEAL, TEAL,                 TEAL, TEAL, ORNG, TEAL, TEAL,
 		                                 TEAL, TEAL, TEAL, TEAL, TEAL, TEAL
 	),
-	// [MTGAP] = KEYS_TO_LEDS(
-	// 	TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,                    TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
-	// 	TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, GREN,                    TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
-	// 	TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,                    TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
-	// 	TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,                                TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
-	// 	TEAL, TEAL, ORNG, TEAL, TEAL,                TEAL, TEAL,                 TEAL, TEAL, ORNG, TEAL, TEAL,
-	// 	                                 TEAL, TEAL, TEAL, TEAL, TEAL, TEAL
-	// ),
-	[SYM] = KEYS_TO_LEDS(
-		TEAL, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG,                    ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG,
-		BLCK, GOLD, TEAL, GOLD, GOLD, BLCK, BLCK,                    BLCK, BLCK, BLCK, BLCK, BLCK, GOLD, BLCK,
-		BLCK, TEAL, TEAL, TEAL, GOLD, BLCK, BLCK,                    BLCK, TEAL, TEAL, TEAL, TEAL, GOLD, BLCK,
-		BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,                                BLCK, BLCK, BLCK, GOLD, GOLD, BLCK,
-		BLCK, BLCK, ORNG, BLCK, BLCK,                BLCK, BLCK,                 BLCK, BLCK, BLCK, BLCK, BLCK,
+	[COLMK] = KEYS_TO_LEDS(
+		TEAL, TEAL, GREN, TEAL, TEAL, TEAL, TEAL,                    TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
+		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, GREN,                    GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
+		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, GOLD,                    GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
+		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,                                TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
+		TEAL, TEAL, ORNG, TEAL, TEAL,                TEAL, TEAL,                 TEAL, TEAL, ORNG, TEAL, TEAL,
 		                                 TEAL, TEAL, TEAL, TEAL, TEAL, TEAL
 	),
-	[NAV] = { {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {124,255,199}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {31,255,255}, {31,255,255}, {31,255,255}, {31,255,255}, {33,255,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,204,255}, {146,224,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,204,255}, {146,224,255}, {10,225,255}, {10,225,255}, {10,225,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {10,204,255}, {146,224,255}, {10,204,255}, {10,204,255}, {31,255,255}, {31,255,255}, {31,255,255}, {31,255,255} },
+	[SYM] = KEYS_TO_LEDS(
+		TEAL, ORNG, ORNG, GREN, ORNG, ORNG, ORNG,                    ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG,
+		BLCK, GOLD, TEAL, GOLD, GOLD, BLCK, BLCK,                    BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, ORNG,
+		BLCK, TEAL, TEAL, TEAL, GOLD, BLCK, BLCK,                    BLCK, BLCK, BLCK, BLCK, RED , BLCK, BLCK,
+		BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,                                BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,
+		BLCK, BLCK, ORNG, BLCK, BLCK,                BLCK, BLCK,                 BLCK, BLCK, ORNG, BLCK, BLCK,
+		                                 BLCK, TEAL, TEAL, TEAL, TEAL, BLCK
+	),
+	[NAV] = KEYS_TO_LEDS(
+		BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,                    BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,
+		BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,                    BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,
+		BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,                    BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,
+		BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,                                BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,
+		BLCK, BLCK, ORNG, BLCK, BLCK,                TEAL, TEAL,                 BLCK, BLCK, ORNG, BLCK, BLCK,
+		                                 TEAL, TEAL, TEAL, BLCK, BLCK, BLCK
+	),
 
 };
 
@@ -103,30 +134,56 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 
 LEADER_EXTERNS();
-bool repeat_enabled = true;
+
 void matrix_scan_user(void) {
 	LEADER_DICTIONARY() {
 		leading = false;
 
 		SEQ_ONE_KEY(KC_T) {
 			SEND_STRING(SS_LCTL(SS_LSFT("t")));
+		}
 
-		} else SEQ_ONE_KEY(KC_1) {
-			repeat_enabled = !repeat_enabled;
+		SEQ_ONE_KEY(KC_1) {
+			layer_move(QWERTY);
+		}
 
-		} else SEQ_ONE_KEY(KC_R) {
+		SEQ_ONE_KEY(KC_2) {
+			layer_move(COLMK);
+		}
+
+		SEQ_ONE_KEY(KC_3) {
+			layer_move(SYM);
+		}
+
+		SEQ_ONE_KEY(KC_4) {
+			layer_move(NAV);
+		}
+
+		SEQ_ONE_KEY(KC_R) {
 			SEND_STRING(SS_LALT(SS_TAP(X_F2)));
+		}
 
-		} else SEQ_ONE_KEY(KC_W) {
+		SEQ_ONE_KEY(KC_W) {
 			SEND_STRING(SS_LALT(SS_TAP(X_F4)));
+		}
 
-		} else SEQ_TWO_KEYS(KC_S, KC_A) { // select prev word c+s+left
+		SEQ_ONE_KEY(KC_V) {
+			SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_INS))));
+		}
+
+		SEQ_TWO_KEYS(KC_S, KC_A) { // select prev word c+s+left
 			SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_LEFT))));
+		}
 
-		} else SEQ_TWO_KEYS(KC_S, KC_D) { // select next word c+s+left
+		SEQ_TWO_KEYS(KC_S, KC_D) { // select next word c+s+left
 			SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_RIGHT))));
+		}
 
-		} else SEQ_TWO_KEYS(KC_G, KC_C) {
+		SEQ_TWO_KEYS(KC_D, KC_D) { // select all and backspace
+			SEND_STRING(SS_TAP(X_END) SS_LSFT(SS_TAP(X_HOME)) SS_TAP(X_BSPACE));
+		}
+
+		SEQ_TWO_KEYS(KC_G, KC_C) {
 			SEND_STRING("gcloud compute ssh ");
 		}
 
@@ -136,16 +193,6 @@ void matrix_scan_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
-		case KC_A ... KC_0:
-			if (!IS_LAYER_ON(QWERTY) || repeat_enabled) return true;
-			if (process_leader(keycode, record) && record->event.pressed) {
-				if (record->event.pressed) {
-					tap_code16(keycode);
-				}
-			} else {
-				process_tap_dance(keycode, record);
-			}
-			break;
 		case ST_MACRO_BR:
 			if (record->event.pressed) {
 				if (leading) {
@@ -182,54 +229,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 extern rgb_config_t rgb_matrix_config;
 
-void keyboard_post_init_user(void) {
-	rgb_matrix_enable();
-	rgblight_mode(1);
-	rgb_matrix_config.hsv.v = UINT8_MAX;
+
+void set_color_at(int i, float f, uint8_t h, uint8_t s, uint8_t v) {
+	if (!h && !s && !v) {
+		rgb_matrix_set_color(i, 0, 0, 0);
+		return;
+	}
+	HSV hsv = {
+		.h = h,
+		.s = s,
+		.v = v,
+	};
+	RGB rgb = hsv_to_rgb(hsv);
+	rgb_matrix_set_color(i, f * rgb.r, f * rgb.g, f * rgb.b);
 }
 
-void set_layer_color(int layer) {
+void set_layer_color(int layer, float f) {
 	for (int i = 0; i < DRIVER_LED_TOTAL; i++) {
-		HSV hsv = {
-			.h = pgm_read_byte(&ledmap[layer][i][0]),
-			.s = pgm_read_byte(&ledmap[layer][i][1]),
-			.v = pgm_read_byte(&ledmap[layer][i][2]),
-		};
-		if (!hsv.h && !hsv.s && !hsv.v) {
-			rgb_matrix_set_color(i, 0, 0, 0);
-		} else {
-			RGB rgb = hsv_to_rgb(hsv);
-			float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
-			rgb_matrix_set_color(i, f * rgb.r, f * rgb.g, f * rgb.b);
-		}
+		HSV hsv = ledmap[layer][i];
+		set_color_at(i, f, hsv.h, hsv.s, hsv.v);
 	}
 }
 
 void rgb_matrix_indicators_user(void) {
-	switch (biton32(layer_state)) {
-	case 0:
-		set_layer_color(0);
-		if (leading) {
-			rgb_matrix_set_color(31, RGB_RED);
-		} else {
-			rgb_matrix_set_color(31, RGB_GOLD);
-		}
+	const float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
+	const uint8_t layer = biton32(layer_state);
+	set_layer_color(layer, f);
 
-		if (repeat_enabled) {
-			rgb_matrix_set_color(5, RGB_TURQUOISE);
-		} else {
-			rgb_matrix_set_color(5, RGB_TEAL);
-		}
-		break;
-	case 1:
-		set_layer_color(1);
-		break;
-	case 2:
-		set_layer_color(2);
-		break;
-	default:
-		if (rgb_matrix_get_flags() == LED_FLAG_NONE)
-			rgb_matrix_set_color_all(0, 0, 0);
-		break;
+	if (leading) {
+		set_color_at(31, f, HSV_RED);
+	} else {
+		set_color_at(31, f, HSV_GOLD);
 	}
 }
