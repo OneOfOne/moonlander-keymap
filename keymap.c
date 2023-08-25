@@ -6,6 +6,8 @@
 #include "ledmap.h"
 #include "dance.h"
 
+#include "password.h"
+
 enum custom_keycodes {
 	RGB_SLD = ML_SAFE_RANGE,
 	ST_MACRO_BR, // [|]
@@ -15,7 +17,7 @@ enum custom_keycodes {
 
 enum layers {
 	QWERTY,
-	COLMK,
+	QMAC,
 	SYM,
 	NAV,
 };
@@ -58,77 +60,45 @@ enum tap_dance_codes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[QWERTY] = LAYOUT_moonlander(
-		DN(GRV), KC_1   , KC_2   , KC_3   , KC_4   , KC_5   , KC_6   ,          KC_7   , KC_8   , KC_9   , KC_0   , KC_MINS, KC_EQL , KC_BSPC,
-		KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   , MC(EQ) ,          MC(BR) , KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSLS,
-		KC_ESC , KC_A   , KC_S   , KC_D   , KC_F   , KC_G   , KC_LEAD,          MC(PR) , KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT,
-		KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,                            KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,
-		KC_LCTL, LSFTCTL, MO(SYM), KC_LALT, KC_SPC ,          KC_MEH ,          KC_HYPR,          KC_SPC , ALTLBRC, TT(SYM), RSFTCTL, CTLRBRC,
-		                                    KC_ENT , DN(BS) , KC_LGUI,          KC_APP , DN(DEL), KC_ENT
+		DN(GRV), KC_1, KC_2, KC_3, KC_4, KC_5, KC_6,    /* ----------------- */ KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, KC_BSPC,
+		KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, MC(EQ),   /* ----------------- */ MC(BR), KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSLS,
+		KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_LEAD,  /* ----------------- */ MC(PR), KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
+		KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B,           /* -----------------*/ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
+		KC_LCTL, LSFTCTL, MO(SYM), KC_LALT, KC_SPC,      KC_MEH, KC_HYPR, KC_SPC,    ALTLBRC, MO(SYM), RSFTCTL, CTLRBRC,
+											KC_ENT, DN(BS), KC_LGUI, KC_APP, DN(DEL), KC_ENT
 	),
-	[COLMK] = LAYOUT_moonlander(
-		______ , ______ , ______ , ______ , ______ , ______ , ______ ,          ______ , ______ , ______ , ______ , ______ , ______ , ______ ,
-		______ , KC_Q   , KC_W   , KC_F   , KC_P   , KC_B   , ______ ,          ______ , KC_J   , KC_L   , KC_U   , KC_Y   , KC_SCLN, ______ ,
-		______ , KC_A   , KC_R   , KC_S   , KC_T   , KC_G   , ______ ,          ______ , KC_M   , KC_N   , KC_E   , KC_I   , KC_O   , ______ ,
-		______ , KC_Z   , KC_X   , KC_C   , KC_D   , KC_V   ,                            KC_K   , KC_H   , ______ , ______ , ______ , ______ ,
-		______ , ______ , TO(0)  , ______ , ______ ,          ______ ,          ______ ,          ______ , ______ , TO(0)  , ______ , ______ ,
-		                                      ______, ______, ______ ,          ______ , ______ , ______
+
+	[QMAC] = LAYOUT_moonlander(
+		DN(GRV), KC_1, KC_2, KC_3, KC_4, KC_5, KC_6,    /* ----------------- */ KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, KC_BSPC,
+		KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, MC(EQ),   /* ----------------- */ MC(BR), KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSLS,
+		KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_LEAD,  /* ----------------- */ MC(PR), KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
+		KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B,          /* ----------------- */ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
+		KC_LGUI, LSFTCTL, MO(SYM), KC_LCTL, KC_SPC, /* ----- */ KC_MEH, KC_HYPR, KC_SPC, /* ----- */ ALTLBRC, MO(SYM), RSFTCTL, CTLRBRC,
+											KC_ENT, DN(BS), KC_LALT, KC_APP, DN(DEL), KC_ENT
 	),
-	[SYM] = LAYOUT_moonlander(
-		______ , KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  , KC_F6  ,          KC_F7  , KC_F8  , KC_F9  , KC_F10 , KC_F11 , KC_F12 , KC_PSCR,
-		______ , KC_HOME, KC_UP  , KC_END , KC_PGUP, ______ , KC_F13 ,          KC_F14 , ______ , ______ , ______ , ______ , ______ , KC_BRK ,
-		______ , KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, ______ , ______ ,          ______ , ______ , ______ , ______ , KC_LOCK, ______ , ______ ,
-		______ , ______ , ______ , ______ , ______ , ______ ,                            ______ , ______ , ______ , ______ , ______ , ______ ,
-		______ , ______ , TO(0)  , ______ , ______ ,          KC_MUTE,          KC_MPLY,          ______ , ______ , TO(0)  , ______ , ______ ,
-		                                    ______ , KC_VOLU, KC_VOLD,          KC_MPRV, KC_MNXT, ______
-	),
-	[NAV] = LAYOUT_moonlander(
-		AU_TOG , MS_BTN1, MS_BTN2, MS_BTN3, MS_BTN4, MS_BTN5, MS_BTN6,          ______ , ______ , ______ , ______ , ______ , ______ , KC_ORYX,
-		MU_TOG , MS_W_U , MS_UP  , MS_W_D , ______ , ______ , ______ ,          ______ , ______ , ______ , ______ , ______ , ______ , ______ ,
-		MU_MOD , MS_LEFT, MS_DOWN, MS_RGHT, ______ , ______ , ______ ,          ______ , RGB_HUD, RGB_HUI, RGB_SPD, RGB_SPI, ______ , ______ ,
-		______ , MS_W_L , ______ , MS_W_R , ______ , ______ ,                            RGB_VAD, RGB_VAI, RGB_SLD, RGB_MOD, ______ , ______ ,
-		______ , ______ , TO(0)  , ______ , ______ ,          ______ ,          ______ ,          ______ , ______ , TO(0)  , ______ , ______ ,
-		                                      ______, ______, ______ ,          ______ , ______ , ______
-	),
+
+	[SYM]    = LAYOUT_moonlander(
+		______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, /* ----------------- */ KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_PSCR,
+		______, KC_HOME, KC_UP, KC_END, KC_PGUP, ______,  /* ----------------- */ KC_F13, KC_F14, ______, ______, ______, ______, ______, KC_BRK,
+		______, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, ______, ______, /* ----------------- */  ______, ______, ______, ______, KC_LOCK, ______, ______,
+		______, MS_BTN4, ______, MS_BTN5, ______, ______, /* ----------------- */  ______, ______, ______, ______, ______, ______,
+		______, ______, TO(0), ______, ______, KC_MUTE, /* ----------------- */ KC_MPLY, ______, ______, TO(0), ______, ______,
+											______, KC_VOLU, KC_VOLD, KC_MPRV, KC_MNXT, ______
+		),
+
+	[NAV]    = LAYOUT_moonlander(AU_TOG, MS_BTN1, MS_BTN2, MS_BTN3, MS_BTN4, MS_BTN5, MS_BTN6, ______, ______, ______, ______, ______, ______, KC_ORYX, MU_TOG, MS_W_U, MS_UP, MS_W_D, ______, ______, ______, ______, ______, ______, ______, ______, ______, ______, MU_MOD, MS_LEFT, MS_DOWN, MS_RGHT, ______, ______, ______, ______, RGB_HUD, RGB_HUI, RGB_SPD, RGB_SPI, ______, ______, ______, MS_W_L, ______, MS_W_R, ______, ______, RGB_VAD, RGB_VAI, RGB_SLD, RGB_MOD, ______, ______, ______, ______, TO(0), ______, ______, ______, ______, ______, ______, TO(0), ______, ______, ______, ______, ______, ______, ______, ______),
 };
 
 const HSV PROGMEM ledmap[][DRIVER_LED_TOTAL] = {
-	[QWERTY] = KEYS_TO_LEDS(
-		TEAL, GREN, TEAL, TEAL, TEAL, TEAL, TEAL,                    TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
-		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, GREN,                    GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
-		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, GOLD,                    GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
-		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,                                TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
-		TEAL, TEAL, ORNG, TEAL, TEAL,                TEAL, TEAL,                 TEAL, TEAL, ORNG, TEAL, TEAL,
-		                                 TEAL, TEAL, TEAL, TEAL, TEAL, TEAL
-	),
-	[COLMK] = KEYS_TO_LEDS(
-		TEAL, TEAL, GREN, TEAL, TEAL, TEAL, TEAL,                    TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
-		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, GREN,                    GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
-		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, GOLD,                    GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
-		TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,                                TEAL, TEAL, TEAL, TEAL, TEAL, TEAL,
-		TEAL, TEAL, ORNG, TEAL, TEAL,                TEAL, TEAL,                 TEAL, TEAL, ORNG, TEAL, TEAL,
-		                                 TEAL, TEAL, TEAL, TEAL, TEAL, TEAL
-	),
-	[SYM] = KEYS_TO_LEDS(
-		TEAL, ORNG, ORNG, GREN, ORNG, ORNG, ORNG,                    ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG,
-		BLCK, GOLD, TEAL, GOLD, GOLD, BLCK, BLCK,                    BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, ORNG,
-		BLCK, TEAL, TEAL, TEAL, GOLD, BLCK, BLCK,                    BLCK, BLCK, BLCK, BLCK, RED , BLCK, BLCK,
-		BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,                                BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,
-		BLCK, BLCK, ORNG, BLCK, BLCK,                BLCK, BLCK,                 BLCK, BLCK, ORNG, BLCK, BLCK,
-		                                 BLCK, TEAL, TEAL, TEAL, TEAL, BLCK
-	),
-	[NAV] = KEYS_TO_LEDS(
-		BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,                    BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,
-		BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,                    BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,
-		BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,                    BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,
-		BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,                                BLCK, BLCK, BLCK, BLCK, BLCK, BLCK,
-		BLCK, BLCK, ORNG, BLCK, BLCK,                TEAL, TEAL,                 BLCK, BLCK, ORNG, BLCK, BLCK,
-		                                 TEAL, TEAL, TEAL, BLCK, BLCK, BLCK
-	),
+	[QWERTY] = KEYS_TO_LEDS(TEAL, GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, GREN, GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, GOLD, GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, ORNG, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, ORNG, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL),
+	[QMAC]  = KEYS_TO_LEDS(TEAL, TEAL, GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, GREN, GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, GOLD, GREN, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, ORNG, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, ORNG, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL, TEAL),
+	[SYM]    = KEYS_TO_LEDS(TEAL, ORNG, ORNG, GREN, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, BLCK, GOLD, TEAL, GOLD, GOLD, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, ORNG, BLCK, TEAL, TEAL, TEAL, GOLD, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, RED, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, ORNG, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, ORNG, BLCK, BLCK, BLCK, TEAL, TEAL, TEAL, TEAL, BLCK),
+	[NAV]    = KEYS_TO_LEDS(BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, ORNG, BLCK, BLCK, TEAL, TEAL, BLCK, BLCK, ORNG, BLCK, BLCK, TEAL, TEAL, TEAL, BLCK, BLCK, BLCK),
 
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-	[DANCE_BS] = TAP_HOLD_DANCE(KC_BSPC, LCTL(KC_BSPC)),
+	[DANCE_BS]  = TAP_HOLD_DANCE(KC_BSPC, LCTL(KC_BSPC)),
 	[DANCE_DEL] = TAP_HOLD_DANCE(KC_DEL, LCTL(KC_DEL)),
 	[DANCE_GRV] = TAP_HOLD_DANCE(KC_GRV, KC_ESC),
 };
@@ -148,7 +118,7 @@ void matrix_scan_user(void) {
 		}
 
 		SEQ_ONE_KEY(KC_2) {
-			layer_move(COLMK);
+			layer_move(QMAC);
 		}
 
 		SEQ_ONE_KEY(KC_3) {
@@ -180,11 +150,15 @@ void matrix_scan_user(void) {
 		}
 
 		SEQ_TWO_KEYS(KC_D, KC_D) { // select all and backspace
-			SEND_STRING(SS_TAP(X_END) SS_LSFT(SS_TAP(X_HOME)) SS_TAP(X_BSPACE));
+			SEND_STRING(SS_TAP(X_END) SS_LSFT(SS_TAP(X_HOME)) SS_TAP(X_BSPACE) SS_TAP(X_BSPACE));
 		}
 
 		SEQ_TWO_KEYS(KC_G, KC_C) {
 			SEND_STRING("gcloud compute ssh ");
+		}
+
+		SEQ_TWO_KEYS(KC_P, KC_W) {
+			SEND_STRING(PASSWORD SS_TAP(X_ENTER));
 		}
 
 		leader_end();
@@ -229,7 +203,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 extern rgb_config_t rgb_matrix_config;
 
-
 void set_color_at(int i, float f, uint8_t h, uint8_t s, uint8_t v) {
 	if (!h && !s && !v) {
 		rgb_matrix_set_color(i, 0, 0, 0);
@@ -252,7 +225,7 @@ void set_layer_color(int layer, float f) {
 }
 
 void rgb_matrix_indicators_user(void) {
-	const float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
+	const float   f     = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
 	const uint8_t layer = biton32(layer_state);
 	set_layer_color(layer, f);
 

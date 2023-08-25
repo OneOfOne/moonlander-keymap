@@ -22,4 +22,6 @@ CIE1931_CURVE = yes
 # DEBOUNCE_TYPE = asym_eager_defer_pk
 DEBOUNCE_TYPE = none
 
+ALLOW_WARNINGS = yes
 SRC += dance.c
+-include ../default/rules.mk
