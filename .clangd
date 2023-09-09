@@ -1,0 +1,8 @@
+CompileFlags:
+    Add:
+        - "-I../../../../lib/chibios/os/hal/osal/os-less/AVR"
+        - "-I../../../../lib/chibios/os/hal/include/"
+        - "-I../../../../platforms"
+        - "-I../../../../platforms/chibios"
+        - "-I../../../../quantum/"
+        - "-I../../"
