@@ -17,8 +17,8 @@ TAP_DANCE_ENABLE = yes
 LEADER_ENABLE = yes
 CIE1931_CURVE = yes
 
-# LTO_ENABLE = yes
-# DEBOUNCE_TYPE = sym_eager_pk
+LTO_ENABLE = yes
+#DEBOUNCE_TYPE = sym_eager_pk
 # DEBOUNCE_TYPE = asym_eager_defer_pk
 DEBOUNCE_TYPE = none
 
