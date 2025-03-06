@@ -2,7 +2,7 @@
 
 #define GET_UD keycode_data_t* ud = ((keycode_data_t*)user_data);
 
-uint8_t dance_step(qk_tap_dance_state_t *state) {
+uint8_t dance_step(tap_dance_state_t *state) {
 	if (state->count == 1) {
 		if (state->interrupted || !state->pressed) return SINGLE_TAP;
 		else return SINGLE_HOLD;
@@ -14,7 +14,7 @@ uint8_t dance_step(qk_tap_dance_state_t *state) {
 	return MORE_TAPS;
 }
 
-void dance_each(qk_tap_dance_state_t *state, void *user_data) {
+void dance_each(tap_dance_state_t *state, void *user_data) {
 	GET_UD
 
 	if (state->count == 3) {
@@ -27,7 +27,7 @@ void dance_each(qk_tap_dance_state_t *state, void *user_data) {
 	}
 }
 
-void dance_tap_hold_dtap_finished(qk_tap_dance_state_t *state, void *user_data) {
+void dance_tap_hold_dtap_finished(tap_dance_state_t *state, void *user_data) {
 	GET_UD
 
 	ud->step = dance_step(state);
@@ -55,7 +55,7 @@ void dance_tap_hold_dtap_finished(qk_tap_dance_state_t *state, void *user_data) 
 	}
 }
 
-void dance_tap_hold_dtap_reset(qk_tap_dance_state_t *state, void *user_data) {
+void dance_tap_hold_dtap_reset(tap_dance_state_t *state, void *user_data) {
 	GET_UD
 
 	wait_ms(1);

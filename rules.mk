@@ -7,21 +7,21 @@ SPACE_CADET_ENABLE = no
 GRAVE_ESC_ENABLE = no
 MAGIC_ENABLE = no
 
+VIA_ENABLE = no
 WEBUSB_ENABLE = no
 ORYX_ENABLE = no
 AUDIO_ENABLE = no
 
-MOUSEKEY_ENABLE = yes
-KEY_LOCK_ENABLE = yes
-TAP_DANCE_ENABLE = yes
+MOUSEKEY_ENABLE = no
+KEY_LOCK_ENABLE = no
+TAP_DANCE_ENABLE = no
 LEADER_ENABLE = yes
 CIE1931_CURVE = yes
 
 LTO_ENABLE = yes
 #DEBOUNCE_TYPE = sym_eager_pk
 # DEBOUNCE_TYPE = asym_eager_defer_pk
-DEBOUNCE_TYPE = none
+DEBOUNCE_TYPE = sym_eager_pk
 
 ALLOW_WARNINGS = yes
-SRC += dance.c
--include ../default/rules.mk
+# SRC += dance.c

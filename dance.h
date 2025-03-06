@@ -30,7 +30,7 @@ typedef struct {
 
 #define TAP_DTAP_DANCE(tap, dtap) ACTION_TAP_DANCE_ADV_CUSTOM(dance_each, dance_tap_hold_dtap_finished, dance_tap_hold_dtap_reset, tap, 0, dtap)
 
-uint8_t dance_step(qk_tap_dance_state_t *state);
-void    dance_each(qk_tap_dance_state_t *state, void *user_data);
-void    dance_tap_hold_dtap_finished(qk_tap_dance_state_t *state, void *user_data);
-void    dance_tap_hold_dtap_reset(qk_tap_dance_state_t *state, void *user_data);
+uint8_t dance_step(tap_dance_state_t *state);
+void    dance_each(tap_dance_state_t *state, void *user_data);
+void    dance_tap_hold_dtap_finished(tap_dance_state_t *state, void *user_data);
+void    dance_tap_hold_dtap_reset(tap_dance_state_t *state, void *user_data);
