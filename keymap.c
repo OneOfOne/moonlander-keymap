@@ -64,20 +64,13 @@ enum tap_dance_codes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[QWERTY] = LAYOUT_moonlander(
-		KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, /* ----------------- */ KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, KC_BSPC,
-		KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, MC(EQ), /* ----------------- */ MC(BR), KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSLS,
-		KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, QK_LEAD, /* ----------------- */ MC(PR), KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
-		KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, /* -----------------*/ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
-		KC_LCTL, LSFTCTL, MO(SYM), KC_LALT, KC_SPC, KC_MEH, KC_HYPR, KC_SPC, ALTLBRC, MO(SYM), KC_RBRC, CTLRBRC,
-		KC_ENT, KC_BSPC, KC_LGUI, KC_APP, KC_DEL, KC_ENT),
-
-	[QMAC] = LAYOUT_moonlander(
-		KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, /* ----------------- */ KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, KC_BSPC,
-		KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, MC(EQ), /* ----------------- */ MC(BR), KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSLS,
-		KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, QK_LEAD, /* ----------------- */ MC(PR), KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
-		KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, /* ----------------- */ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
-		KC_LGUI, LSFTCTL, MO(SYM), KC_LCTL, KC_SPC, /* ----- */ KC_MEH, KC_HYPR, KC_SPC, /* ----- */ ALTLBRC, MO(SYM), RSFTCTL, CTLRBRC,
-		KC_ENT, KC_BSPC, KC_LALT, KC_APP, KC_DEL, KC_ENT),
+		KC_GRV, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, /* -------------------- */ KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, KC_BSPC,
+		KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_MEH, /* ------------------ */ KC_HYPR, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSLS,
+		KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, QK_LEAD, /* ----------------- */ QK_LEAD, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT,
+		KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B, /* ------------------------- */ KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT,
+		KC_LCTL, LSFTCTL, MO(SYM), KC_LALT, KC_SPC, KC_MEH, /*-------------- */KC_HYPR, KC_SPC, ALTLBRC, MO(SYM), KC_RBRC, KC_RCTL,
+		/* ------------------- */ KC_ENT, KC_BSPC, KC_LGUI, /*--------------*/ KC_APP, KC_DEL, KC_ENT /* ---------------------- */
+	),
 
 	[SYM] = LAYOUT_moonlander(
 		______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, /* ----------------- */ KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_PSCR,
@@ -85,7 +78,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		______, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, ______, ______, /* ----------------- */ ______, ______, ______, ______, ______, ______, ______,
 		______, MS_BTN4, ______, MS_BTN5, ______, ______, /* ----------------- */ ______, ______, ______, ______, ______, ______,
 		______, ______, TO(0), ______, ______, KC_MUTE, /* ----------------- */ KC_MPLY, ______, ______, TO(0), ______, ______,
-		______, KC_VOLU, KC_VOLD, KC_MPRV, KC_MNXT, ______),
+		______, KC_VOLU, KC_VOLD, KC_MPRV, KC_MNXT, ______
+	),
 
 };
 
@@ -93,10 +87,10 @@ const HSV PROGMEM ledmap[][RGB_MATRIX_LED_COUNT] = {
 	[QWERTY] = KEYS_TO_LEDS(
 		MEDSEA, GREN, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA,
 		MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, GREN, GREN, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA,
-		MEDSEA, MEDSEA, MEDSEA, MEDSEA, GOLD, GREN, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA,
+		MEDSEA, MEDSEA, MEDSEA, MEDSEA, GOLD, GOLD, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA,
 		MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, ORNG, MEDSEA, MEDSEA, MEDSEA,
-		MEDSEA, MEDSEA, MEDSEA, ORNG, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA),
-	[QMAC] = KEYS_TO_LEDS(MEDSEA, MEDSEA, GREN, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, GREN, GREN, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, GOLD, GREN, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, ORNG, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, ORNG, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA),
+		MEDSEA, MEDSEA, MEDSEA, ORNG, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA, MEDSEA
+	),
 	[SYM] = KEYS_TO_LEDS(MEDSEA, ORNG, ORNG, GREN, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, ORNG, BLCK, GOLD, MEDSEA, GOLD, GOLD, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, ORNG, BLCK, MEDSEA, MEDSEA, MEDSEA, GOLD, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, RED, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, ORNG, BLCK, BLCK, BLCK, BLCK, BLCK, BLCK, ORNG, BLCK, BLCK, BLCK, MEDSEA, MEDSEA, MEDSEA, MEDSEA, BLCK),
 
 };
@@ -106,54 +100,49 @@ const HSV PROGMEM ledmap[][RGB_MATRIX_LED_COUNT] = {
 // 	[DANCE_DEL] = TAP_HOLD_DANCE(KC_DEL, LCTL(KC_DEL)),
 // 	[DANCE_GRV] = TAP_HOLD_DANCE(KC_GRV, KC_ESC),
 // };
+
 bool is_leading = false;
 void leader_start_user(void) {
-    is_leading = true;
+	is_leading = true;
 }
 void leader_end_user(void) {
-		if (leader_sequence_one_key(KC_T)) {
-			SEND_STRING(SS_LCTL(SS_LSFT("t")));
-		}
+	if (leader_sequence_one_key(KC_T)) {
+		SEND_STRING(SS_LCTL(SS_LSFT("t")));
+	}
 
-		if (leader_sequence_one_key(KC_1)) {
-			layer_move(QWERTY);
-		}
+	if (leader_sequence_one_key(KC_1)) {
+		layer_move(QWERTY);
+	}
 
-		if (leader_sequence_one_key(KC_2)) {
-			layer_move(QMAC);
-		}
+	if (leader_sequence_one_key(KC_3)) {
+		layer_move(SYM);
+	}
 
-		if (leader_sequence_one_key(KC_3)) {
-			layer_move(SYM);
-		}
+	if (leader_sequence_one_key(KC_W)) {
+		SEND_STRING(SS_LALT(SS_TAP(X_F4)));
+	}
 
+	if (leader_sequence_one_key(KC_V)) {
+		SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_INS))));
+	}
 
+	if (leader_sequence_two_keys(KC_S, KC_A)) {
+		SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_LEFT))));
+	}
 
-		if (leader_sequence_one_key(KC_W)) {
-			SEND_STRING(SS_LALT(SS_TAP(X_F4)));
-		}
+	if (leader_sequence_two_keys(KC_S, KC_D)) {
+		SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_RIGHT))));
+	}
 
-		if (leader_sequence_one_key(KC_V)) {
-			SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_INS))));
-		}
+	if (leader_sequence_two_keys(KC_P, KC_W)) {
+		SEND_STRING(PASSWORD);
+	}
 
-		if (leader_sequence_two_keys(KC_S, KC_A)) {
-			SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_LEFT))));
-		}
+	if (leader_sequence_one_key(KC_R)) {
+		SEND_STRING(SS_LALT(SS_TAP(X_F2)));
+	}
 
-		if (leader_sequence_two_keys(KC_S, KC_D)) {
-			SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_RIGHT))));
-		}
-
-		if (leader_sequence_two_keys(KC_P, KC_W)) {
-			SEND_STRING(PASSWORD);
-		}
-
-		if (leader_sequence_one_key(KC_R)) {
-			SEND_STRING(SS_LALT(SS_TAP(X_F2)));
-		}
-
-    is_leading = false;
+	is_leading = false;
 }
 
 // bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -226,8 +215,10 @@ bool rgb_matrix_indicators_user(void) {
 
 	if (is_leading) {
 		set_color_at(31, f, HSV_RED);
+		set_color_at(32, f, HSV_RED);
 	} else {
 		set_color_at(31, f, HSV_GOLD);
+		set_color_at(32, f, HSV_GOLD);
 	}
 	return true;
 }

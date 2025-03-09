@@ -23,5 +23,5 @@ LTO_ENABLE = yes
 # DEBOUNCE_TYPE = asym_eager_defer_pk
 DEBOUNCE_TYPE = sym_eager_pk
 
-ALLOW_WARNINGS = yes
+ALLOW_WARNINGS = no
 # SRC += dance.c

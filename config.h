@@ -35,7 +35,7 @@
 #define HOLD_ON_OTHER_KEY_PRESS
 
 #undef DEBOUNCE
-#define DEBOUNCE 5
+#define DEBOUNCE 1
 
 #undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 250 // limits maximum brightness of LEDs to 150 out of 255. Higher may cause the controller to crash.
